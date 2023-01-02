@@ -109,7 +109,6 @@ def compute_loss(model, x):
 @tf.function
 def train_step(model, x, optimizer):
   """Executes one training step and returns the loss.
-
   This function computes the loss and gradients, and uses the latter to
   update the model's parameters.
   """
@@ -140,7 +139,7 @@ num_examples_to_generate = 16
 # keeping the random vector constant for generation (prediction) so
 # it will be easier to see the improvement.
 random_vector_for_generation = tf.random.normal(
-    shape=[num_examples_to_generate, latent_dim])
+                                shape=[num_examples_to_generate, latent_dim])
 model = CVAE(latent_dim)
 
 # Pick a sample of the test set for generating output images
