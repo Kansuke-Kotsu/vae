@@ -132,7 +132,7 @@ def generate_and_save_images(model, epoch, test_sample):
     plt.savefig('image_at_epoch_{:04d}.png'.format(epoch))
     plt.show()
 
-epochs = 100
+epochs = 1
 # set the dimensionality of the latent space to a plane for visualization later
 latent_dim = 2
 num_examples_to_generate = 16
@@ -162,7 +162,10 @@ for epoch in range(1, epochs + 1):
     display.clear_output(wait=False)
     print('Epoch: {}, Test set ELBO: {}, time elapse for current epoch: {}'
         .format(epoch, elbo, end_time - start_time))
-    #generate_and_save_images(model, epoch, test_sample)
+  generate_and_save_images(model, epoch, test_sample)
+    
+model.save('result/model{:04d}.h5'.format(epochs))
+
 
 def display_image(epoch_no):
   return PIL.Image.open('image_at_epoch_{:04d}.png'.format(epoch_no))
