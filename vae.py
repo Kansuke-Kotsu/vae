@@ -129,13 +129,14 @@ def generate_and_save_images(model, epoch, test_sample):
         plt.axis('off')
 
       # tight_layout minimizes the overlap between 2 sub-plots
-    plt.savefig('image_at_epoch_{:04d}.png'.format(epoch))
-    plt.show()
+    plt.savefig('result/image_at_epoch_{:04d}.png'.format(epoch))
+    #plt.show()
 
-epochs = 1
-# set the dimensionality of the latent space to a plane for visualization later
+epochs = 50
+saved_model_path = 'result/vae_model{:04d}.h5'.format(epochs)
 latent_dim = 2
 num_examples_to_generate = 16
+# set the dimensionality of the latent space to a plane for visualization later
 # keeping the random vector constant for generation (prediction) so
 # it will be easier to see the improvement.
 random_vector_for_generation = tf.random.normal(
@@ -146,8 +147,6 @@ model = CVAE(latent_dim)
 assert batch_size >= num_examples_to_generate
 for test_batch in test_dataset.take(1):
   test_sample = test_batch[0:num_examples_to_generate, :, :, :]
-
-#generate_and_save_images(model, 0, test_sample)
 
 for epoch in range(1, epochs + 1):
   start_time = time.time()
@@ -163,9 +162,11 @@ for epoch in range(1, epochs + 1):
     print('Epoch: {}, Test set ELBO: {}, time elapse for current epoch: {}'
         .format(epoch, elbo, end_time - start_time))
   generate_and_save_images(model, epoch, test_sample)
-    
-model.save('result/model{:04d}.h5'.format(epochs))
+  #tf.keras.models.save_model(model=model, filepath='result/model{:04d}.h5'.format(epochs))
+  #model.save_weight('result/model{:04d}.h5'.format(epochs))
+tf.saved_model.save(model, saved_model_path)
 
+    
 
 def display_image(epoch_no):
   return PIL.Image.open('image_at_epoch_{:04d}.png'.format(epoch_no))
