@@ -129,7 +129,7 @@ def generate_and_save_images(model, epoch, test_sample):
         plt.axis('off')
 
       # tight_layout minimizes the overlap between 2 sub-plots
-    plt.savefig('result/image_at_epoch_{:04d}.png'.format(epoch))
+    #plt.savefig('result/image_at_epoch_{:04d}.png'.format(epoch))
     #plt.show()
 
 epochs = 50
@@ -164,8 +164,8 @@ for epoch in range(1, epochs + 1):
   generate_and_save_images(model, epoch, test_sample)
   #tf.keras.models.save_model(model=model, filepath='result/model{:04d}.h5'.format(epochs))
   #model.save_weight('result/model{:04d}.h5'.format(epochs))
-tf.saved_model.save(model, saved_model_path)
-
+#tf.saved_model.save(model, saved_model_path)
+model.save_weights("try")
     
 
 def display_image(epoch_no):
